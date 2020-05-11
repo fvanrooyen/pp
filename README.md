@@ -41,3 +41,18 @@ Explain the Advanced Techniques used in the project and show the relevant code t
 *CONSTRAINT - Show
 *VIEW - Show 
 *PREPARED STATEMENT
+
+------------------------------------------------
+Python Requirements
+
+boto3==1.12.40
+Django==3.0.5
+django-storages==1.9.1
+djangorestframework==3.11.0
+django_redis==4.11.0
+mysql-connector-python==8.0.20
+gunicorn==20.0.4
+mongoengine==0.20.0
+mysqlclient==1.4.6
+django-allauth==0.41.0
+gevent
