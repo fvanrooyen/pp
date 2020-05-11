@@ -1,0 +1,82 @@
+{% extends 'polls/base.html' %}
+
+<script type="text/javascript">
+{% block jquery %}
+var endpoint = '/api/chart/data/'
+var results = [];
+var labels = [];
+$.ajax({
+    method: "GET",
+    url: endpoint,
+    success: function(data){
+        jQuery.each(data, function(key, value) {
+            labels = value.labels
+            results = value.results
+            setChart(key, labels, results)
+        });
+    },
+    error: function(error_data){
+        console.log("error")
+        console.log(error_data)
+    }
+})
+
+function setChart(id, lbls, res){
+    try{
+        var ctx = document.getElementById("myChart"+id);
+        var myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: lbls,
+                datasets: [{
+                    data: res,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                }]
+            },
+        });
+    }
+    catch{
+        console.log("no canvas tag created for " + id + " no chart will be displayed")
+    }
+}
+
+{% endblock %}
+</script>
+
+{% block content %}
+<div class="container-fluid" style="padding: 15px;">
+    <div class="row">
+        {% for result in results %}
+        <div class="col-sm-6 col-lg-4" style="padding: 10px;">
+            <div class="card text-center h-100" style="max-width: 33rem;">
+                <div class="card-header">
+                    <h4>{{result.topic}}</h4>
+                    <h6 class="text-muted">Time Remaining:<br>{{result.time_remaining}}</h6>
+                </div>
+                <div class="card-body">
+                    <canvas id="myChart{{result.pid}}"></canvas>
+                </div>
+                <div class=row style = "padding-bottom: 10px;">
+                    <div class="col">
+                        <a href="{{result.pid}}/vote/" class="btn btn-success btn-lg">Vote</a>                     
+                    </div>
+                    <div class="col">
+                        <a href="/{{result.pid}}/update" class="btn btn-info btn-lg">Edit</a>                     
+                    </div>
+                    <div class="col">
+                        <div class="text-muted">Number of votes: {{result.num_votes}}</div>
+                    </div>             
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+   </div>
+</div>
+{% endblock content %}

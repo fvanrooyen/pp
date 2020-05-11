@@ -1,0 +1,122 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Create new poll</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
+        crossorigin="anonymous">
+
+    <!-- All javascript files goes under here    -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+        
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var maxField = 10; //Input fields increment limitation
+            var addButton = $('.add_button'); //Add button selector
+            var wrapper = $('.field_wrapper'); //Input field wrapper
+            var fieldHTML = '<div><label for="id_choice1">OPTION: </label><input type="text" name="field_name[]" value="" class="form-control"/><a href="javascript:void(0);" class="remove_button">REMOVE POLL</a></div>'; //New input field html
+            var x = 1; //Initial field counter is 1
+
+            //Once add button is clicked
+            $(addButton).click(function(){
+                //Check maximum number of input fields
+                if(x < maxField){
+                    x++; //Increment field counter
+                    $(wrapper).append(fieldHTML); //Add field html
+                }
+            });
+
+            //Once remove button is clicked
+            $(wrapper).on('click', '.remove_button', function(e){
+                e.preventDefault();
+                $(this).parent('div').remove(); //Remove field html
+                x--; //Decrement field counter
+            });
+        });
+    </script>
+    
+    <style type="text/css">
+        input[type="text"] {
+            height: 20px;
+            vertical-align: top;
+        }
+
+        .field_wrapper div {
+            margin-bottom: 10px;
+        }
+
+        .add_button {
+            margin-top: 10px;
+            margin-left: 10px;
+            vertical-align: text-bottom;
+        }
+
+        .remove_button {
+            margin-top: 10px;
+            margin-left: 10px;
+            vertical-align: text-bottom;
+        }
+    </style>
+</head>
+
+{% block content %}
+
+<div class="container">
+    <div class="row center">
+        <div class="col-md-6 offset-md-3">
+            <h2>Edit poll</h2>
+            {% if messages %}
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                <div {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endif %}
+            <form action="" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="pid" id="pid" value="{{poll.pid}}">
+                <div class="form-group">
+                    <label for="id_text">TOPIC:</label>
+                    <textarea name="poll_topic" cols="20" rows="5" class="form-control" required id="poll_topic">{{poll.topic}}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="id_url">WEB LINK (*):</label>
+                    <input type="text" name="poll_url" class="form-control" maxlength="100" minlength="2" required id="poll_url" value= "{{poll.url}}">
+                </div>
+                
+                <div class="field_wrapper">
+                    {% for poll_option in poll_options %}
+                    <div>
+                        <!--input type="text" name="poll_option" class="form-control" maxlength="100" minlength="2" required id="poll_option" value="{{poll_option.polloption}}"-->
+                        <label for="id_choice1">OPTION: </label>
+                        <input type="text"  name="field_name[]" value="{{poll_option.polloption}}" class="form-control"/>
+                        <input type="hidden"  name="choice" id="choice{{forloop.counter}}" value="{{poll_option.oid}}" class="form-control"/>
+                    </div>
+                    {% endfor %}
+                </div>
+            
+           
+                <div style="text-align:right">
+                    <a href="javascript:void(0);" class="add_button" title="Add OPTION" >ADD POLL</a>
+                </div>
+                <button type="submit"  name="btnform1" class="btn btn-primary">Update</button>
+                <button type="submit"  name="btnform2" class="btn btn-primary">Delete</button>
+                
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends 'polls/base.html' %}
+
+<head>
+   <script>
+     $(function () {
+       $("#datetimepicker1").datetimepicker();
+     });
+   </script>
+</head>
+
+{% block content %}
+
+    <div class="container py-5">
+         <div class="row center">
+              <div class="col-md-6 offset-md-3">
+              <h2>Create a Poll</h2>
+              <form method="POST" id="create_form" action="{% url 'create' %}">{% csrf_token %}
+          
+                  <div class="form-group">
+                  <label >Poll Topic</label>
+                      <div><input type="text" id="topic" name="topic" required="required" class="form-control"></div>
+                      <div class="clear"></div>
+                  </div>
+                  
+                  <label >Poll End Date</label>
+                      <div class="form-group">
+                          <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                          <input type="text"  name="enddate" class=" datetimepicker-input" data-target="#datetimepicker1"/>
+                          <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                              <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label><input type="checkbox" id="active" name="active">&nbsp;&nbsp;&nbsp;&nbsp;Activate Poll</label>
+                  </div>
+
+                  <div class="form-group">
+                    <label><input type="checkbox" id="public" name="public">&nbsp;&nbsp;&nbsp;&nbsp;Public Poll</label>
+                  </div>
+
+                  <div class="form-group">
+                  <label >State</label>
+                     <div class="input"><input type="text" id="state" name="state"></div>
+                      <div class="clear"></div>
+                  </div>
+          
+                  <div class="form-group">
+                  <label >Zip</label>
+                      <div class="input"><input type="text" id="zip" name="zip"></div>
+                      <div class="clear"></div>
+                  </div>
+          
+                  <div class="form-group">
+                  <label >Poll Option 1</label>
+                      <div class="input"><input type="text" id="o1" name="o1" class="form-control"></div>
+                      <div class="clear"></div>
+                  </div>
+          
+                  <div class="form-group">
+                  <label >Poll Option2</label>
+                      <div class="input"><input type="text" id="o2" name="o2" class="form-control"></div>
+                      <div class="clear"></div>
+                  </div>
+          
+                  <div class="form-group">
+                  <label >Poll Option 3</label>
+                      <div class="input"><input type="text" id="o3" name="o3" class="form-control"></div>
+                      <div class="clear"></div>
+                  </div>
+
+                  <div class="form-group"> 
+                  <label></label>
+                      <div class="submit">
+                      <button type="submit" class="btn btn-primary">Create My Poll</button>
+                      </div>
+                  <div class="clear"></div> 
+                  </div>
+              </form>
+              </div>
+         </div>
+         
+    </div>
+{% endblock content %}

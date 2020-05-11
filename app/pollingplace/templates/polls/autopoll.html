@@ -1,0 +1,32 @@
+{% extends 'polls/base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="text-center mb-4">Poll of the Week: Music!</h2>
+            <div class="row">
+                <div class="col-md-6 mx-auto">
+                    <div class="card bg-light mb-3">
+                        <div class="card header">
+                            <h3 class="text-center mb-0">Heavy Metal Band Best Albums</h3>
+                        </div>
+                        <div class="card-body">
+                            <form method="POST" id="autopoll" action="{% url 'autopoll' %}">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label>Input Favorite Metal Band:</label>
+                                    <div class="input"><input type="text" id="band" name="band" required="required"></div>
+                                    <div class="clear"></div>
+                                </div>
+                                <button type="submit" class="btn btn-success btn-lg">Create</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

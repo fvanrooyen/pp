@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+<style>
+.city {
+  background-color: green;
+  color: white;
+  padding: 10px;
+}
+
+a:link {
+  color: white;
+}
+
+a:visited {
+  color: white;
+}
+
+a:hover {
+  color: white;
+}
+
+a:active {
+  color: white;
+}
+
+</style>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        {% include 'polls/base/css.html' %}
+    </head>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
+        <a class="navbar-brand" href="#">Polling Place</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </nav>
+    <body>
+        
+        {% block content %}
+        <div class="city">
+        <h2>Login</h2>
+            <form method="POST" id="add_form" action="{% url 'login' %}">{% csrf_token %}
+            <div class="form-group">
+                <label >User Name</label>
+                <div class="input"><input type="text" name="username" required="required"></div>
+                <div class="clear"></div>
+            </div>
+            <div class="form-group">
+                <label >Password</label>
+                <div class="input"><input type="password" name="password" required="required"></div>
+                <div class="clear"></div>
+                <a href="../add">Forgot Password</a>
+            </div>
+            <div class="form-group"> 
+            <label></label>
+                <div class="submit">
+                <button type="submit" class="btn-primary">Login</button>
+                </div>
+                <a href="../add">Create an Account</a>
+                <div class="clear"></div> </div>
+        </form>
+        </div>
+        {% endblock content %}
+        {% include 'polls/base/js.html' %}
+        <script>
+        $(document).ready(function(){
+        {% block jquery %}{% endblock %}
+        })
+        </script>
+    </body>
+</html>

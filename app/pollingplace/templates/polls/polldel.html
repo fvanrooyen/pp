@@ -1,0 +1,31 @@
+{% extends 'polls/base.html' %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row">
+      <div class="col-md-12">
+          <div class="row">
+              <div class="col-md-6 mx-auto">
+                  <div class="card bg-light mb-3">
+                      <div class="card header">
+                          <h3 class="text-center mb-0">Delete Poll</h3>
+                      </div>
+                      <div class="card-body">
+                        <form method="POST" enctype="multipart/form-data"> 
+                          <!-- Security token -->
+                          {% csrf_token %}                      
+                          <!-- Using the formset -->
+                          {{ form.as_p }} 
+                          <div class="text-center">
+                            <button type="submit" class="btn btn-success btn-lg">Submit</button>
+                          </div>
+                        </form>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+{% endblock %}

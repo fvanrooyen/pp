@@ -1,0 +1,33 @@
+{% extends 'polls/base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="text-center mb-4">My Polls</h2>
+            <div class="row">
+                <div class="col-md-6 mx-auto">
+                    <div class="card bg-light mb-3">
+                        <div class="card header">
+                            <h3 class="text-center mb-0">{{ polltxt.topic }}</h3>
+                        </div>
+                        <div class="card-body">
+                            <form class="form" action="{% url 'mypolls' %}" method="post">
+                            {% csrf_token %}
+                            {% for poll in mypolls %}
+                                <label for="choice{{ forloop.counter }}">{{ poll.topic }}</label>
+                                <label for="choice{{ forloop.counter }}"><a href="../{{ poll.pid }}/update">Modify</a></label>
+                                <label for="choice{{ forloop.counter }}"><a href="../{{ poll.pid }}/delete">Delete</a></label>
+                                <br>
+                            {% endfor %}
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
