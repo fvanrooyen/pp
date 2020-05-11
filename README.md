@@ -40,7 +40,7 @@ Explain the Advanced Techniques used in the project and show the relevant code t
 *VIEW - Show
 *CONSTRAINT - Show
 *VIEW - Show 
-*PREPARED STATEMENT
+*Trigger
 
 ------------------------------------------------
 Python Requirements
